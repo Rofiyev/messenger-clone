@@ -1,7 +1,8 @@
 "use client";
 
-import React, { FC, ReactNode } from "react";
+import { FC, ReactNode } from "react";
 import { Toaster } from "react-hot-toast";
+import AuthContext from "@/context/auth-context";
 
 interface Props {
   children: ReactNode;
@@ -9,10 +10,10 @@ interface Props {
 
 const Providers: FC<Props> = ({ children }) => {
   return (
-    <>
+    <AuthContext>
       <Toaster position="top-center" reverseOrder={true} />
       {children}
-    </>
+    </AuthContext>
   );
 };
 

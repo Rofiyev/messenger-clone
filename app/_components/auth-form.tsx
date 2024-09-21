@@ -3,18 +3,25 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { BsGithub, BsGoogle } from "react-icons/bs";
 import axios from "axios";
 import { toast } from "react-hot-toast";
-import { signIn } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 type Variant = "LOGIN" | "REGISTER";
 
 const AuthForm = () => {
+  const router = useRouter();
+  const session = useSession();
   const [variant, setVariant] = useState<Variant>("LOGIN");
   const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (session.status === "authenticated") router.push("/users");
+  }, [session.status, router]);
 
   const {
     register,
@@ -38,7 +45,9 @@ const AuthForm = () => {
         .post("/api/register", data)
         .then(() => {
           toast.success("Sign Up Successfully!");
+          signIn("credentials", data);
           reset();
+          router.push("/users");
         })
         .catch(() => toast.error("Sign Up failure!"))
         .finally(() => setIsLoading(false));
@@ -50,6 +59,7 @@ const AuthForm = () => {
           if (callback?.ok && !callback.error) {
             toast.success("Sign In successfully");
             reset();
+            router.push("/users");
           }
           if (callback?.error) toast.error("Sign In failure!");
         })
@@ -65,12 +75,11 @@ const AuthForm = () => {
         if (callback?.ok && !callback.error) {
           toast.success("Sign In successfully");
           reset();
+          router.push("/users");
         }
         if (callback?.error) toast.error("Sign In failure!");
       })
       .finally(() => setIsLoading(false));
-
-    // Next-Auth Social SignIn
   };
 
   return (
