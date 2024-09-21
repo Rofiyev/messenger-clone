@@ -1,12 +1,16 @@
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import "./globals.css";
+import Providers from "@/providers";
 
 const poppins = Poppins({ weight: "500", subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Messenger Clone",
-  description: "Messenger Clone by create next app",
+  title: "Messenger App",
+  description: "Messenger App by create next app",
+  icons: {
+    icon: "/images/logo.png",
+  },
 };
 
 export default function RootLayout({
@@ -16,7 +20,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={poppins.className}>{children}</body>
+      <body className={poppins.className}>
+        <Providers>{children}</Providers>
+      </body>
     </html>
   );
 }
