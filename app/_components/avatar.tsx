@@ -2,7 +2,11 @@
 
 import { FC } from "react";
 import { User } from "@prisma/client";
-import Image from "next/image";
+import {
+  Avatar as AvatarUI,
+  AvatarImage,
+  AvatarFallback,
+} from "@/components/ui/avatar";
 
 interface Props {
   user: User;
@@ -10,24 +14,10 @@ interface Props {
 
 const Avatar: FC<Props> = ({ user }) => {
   return (
-    <div className="relative">
-      <div
-        className="
-        relative
-        inline-block
-        rounded-full
-        overflow-hidden
-        size-9
-        md:size-11
-        "
-      >
-        <Image
-          src={user?.image ?? "/images/placeholder.jpg"}
-          alt="Avatar"
-          fill
-        />
-      </div>
-    </div>
+    <AvatarUI className="size-9 md:size-11">
+      <AvatarImage src={user?.image ?? "/images/placeholder.jpg"} />
+      <AvatarFallback>{user.image?.slice(0).toUpperCase()}</AvatarFallback>
+    </AvatarUI>
   );
 };
 
