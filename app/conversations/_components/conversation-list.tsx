@@ -28,11 +28,10 @@ const ConversationList: FC<Props> = ({ conversations }) => {
       lg:left-20
       lg:w-80
       lg:block
-      overflow-y-auto
-      border-r
-      border-gray-200
-        `,
-        isOpen ? "block" : "hidden w-full left-0"
+      lg:overflow-y-auto
+      lg:border-r
+      border-gray-200`,
+        !isOpen ? "block w-full left-0" : "hidden"
       )}
     >
       <div className="px-5">

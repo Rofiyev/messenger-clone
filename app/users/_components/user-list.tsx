@@ -28,12 +28,7 @@ const UserList: FC<Props> = ({ users }) => {
       "
     >
       <div className="px-5">
-        <div
-          className="
-          flex
-          flex-col
-          "
-        >
+        <div className="flex flex-col">
           <div
             className="
             text-2xl

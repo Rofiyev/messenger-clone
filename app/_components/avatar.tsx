@@ -14,7 +14,7 @@ interface Props {
 
 const Avatar: FC<Props> = ({ user }) => {
   return (
-    <div className="relative">
+    <div className="relative cursor-pointer">
       <AvatarUI
         className="
         size-9
@@ -26,7 +26,7 @@ const Avatar: FC<Props> = ({ user }) => {
           src={user?.image ?? "/images/placeholder.jpg"}
           alt="Avatar"
         />
-        <AvatarFallback>{user.image?.slice(0).toUpperCase()}</AvatarFallback>
+        <AvatarFallback>{user?.image?.slice(0).toUpperCase()}</AvatarFallback>
       </AvatarUI>
       <span
         className="

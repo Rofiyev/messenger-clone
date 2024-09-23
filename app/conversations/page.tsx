@@ -10,7 +10,8 @@ const Conversations = () => {
   return (
     <div
       className={clsx(
-        `lg:pl-80
+        `
+        lg:pl-80
         h-full
         lg:block
         `,
