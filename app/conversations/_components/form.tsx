@@ -26,11 +26,16 @@ const Form = () => {
   });
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
+    setIsLoading(true);
+
     setValue("message", "", { shouldValidate: true });
-    axios.post("/api/messages", {
-      ...data,
-      conversationId,
-    });
+    axios
+      .post("/api/messages", {
+        ...data,
+        conversationId,
+      })
+      .catch(() => toast.error("Something went wrong!"))
+      .finally(() => setIsLoading(false));
   };
 
   const onImageSubmit = (image: string) => {
