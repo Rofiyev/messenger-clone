@@ -44,7 +44,6 @@ const Form = () => {
         image: image,
         conversationId,
       })
-      .then((res) => console.log(res.data))
       .catch(() => toast.error("Error in sending image"));
   };
 
@@ -105,6 +104,7 @@ const Form = () => {
             `}
         />
         <Button
+          disabled={isLoading}
           type="submit"
           className="
           bg-sky-500

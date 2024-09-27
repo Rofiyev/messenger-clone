@@ -15,6 +15,7 @@ import Avatar from "@/app/_components/avatar";
 import { IoTrash } from "react-icons/io5";
 import ConfirmModal from "./confirm-modal";
 import AvatarGroup from "@/app/_components/avatar-group";
+import useActiveList from "@/hooks/useActiveList";
 
 interface Props {
   conversation: Conversation & {
@@ -27,6 +28,9 @@ interface Props {
 const ProfileDrawer: FC<Props> = ({ conversation, isOpen, onClose }) => {
   const { otherUser } = useOtherUser(conversation);
   const [confirmOpen, setConfirmOpen] = useState<boolean>(false);
+  const { members } = useActiveList();
+
+  const isActive = members.includes(otherUser.email!);
 
   const joinedDate = useMemo(() => {
     return format(new Date(otherUser.createdAt), "PP");
@@ -39,8 +43,8 @@ const ProfileDrawer: FC<Props> = ({ conversation, isOpen, onClose }) => {
   const statusText = useMemo(() => {
     if (conversation.isGroup) return `${conversation.users.length} members`;
 
-    return "Active";
-  }, [conversation]);
+    return isActive ? "Online" : "Offline";
+  }, [conversation, isActive]);
 
   return (
     <>

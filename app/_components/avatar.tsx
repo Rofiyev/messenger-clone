@@ -7,12 +7,16 @@ import {
   AvatarImage,
   AvatarFallback,
 } from "@/components/ui/avatar";
+import useActiveList from "@/hooks/useActiveList";
 
 interface Props {
   user: User;
 }
 
 const Avatar: FC<Props> = ({ user }) => {
+  const { members } = useActiveList();
+  const isActive = members.includes(user.email!);
+
   return (
     <div className="relative cursor-pointer">
       <AvatarUI
@@ -28,20 +32,22 @@ const Avatar: FC<Props> = ({ user }) => {
         />
         <AvatarFallback>{user?.image?.slice(0).toUpperCase()}</AvatarFallback>
       </AvatarUI>
-      <span
-        className="
-        absolute
-        top-0
-        right-0
-        block
-        rounded-full
-        bg-green-500
-        ring-2
-        ring-white
-        size-2
-        md:size-3
-        "
-      />
+      {isActive && (
+        <span
+          className="
+          absolute
+          top-0
+          right-0
+          block
+          rounded-full
+          bg-green-500
+          ring-2
+          ring-white
+          size-2
+          md:size-3
+          "
+        />
+      )}
     </div>
   );
 };

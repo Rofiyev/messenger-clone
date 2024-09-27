@@ -6,7 +6,6 @@ export async function POST(request: Request) {
   try {
     const body = await request.json();
     const { email, password, name } = body;
-    console.log(email, password, name);
 
     if (!name || !password || !email)
       return new NextResponse("Missing info", { status: 400 });
@@ -19,7 +18,6 @@ export async function POST(request: Request) {
 
     return NextResponse.json(user);
   } catch (error) {
-    console.log(error);
     return new NextResponse("Internal Error", { status: 500 });
   }
 }

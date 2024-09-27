@@ -28,10 +28,7 @@ const ConfirmModal: FC<Props> = ({ isOpen, onClose }) => {
         onClose();
         return router.refresh();
       })
-      .catch((error) => {
-        console.log(error);
-        toast.error("Something went wrong!");
-      })
+      .catch(() => toast.error("Something went wrong!"))
       .finally(() => setIsLoading(false));
   };
 

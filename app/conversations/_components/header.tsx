@@ -8,6 +8,7 @@ import { Conversation, User } from "@prisma/client";
 import { HiChevronLeft, HiEllipsisHorizontal } from "react-icons/hi2";
 import ProfileDrawer from "./profile-drawer";
 import AvatarGroup from "@/app/_components/avatar-group";
+import useActiveList from "@/hooks/useActiveList";
 
 interface Props {
   conversation: Conversation & {
@@ -16,14 +17,16 @@ interface Props {
 }
 
 const Header: FC<Props> = ({ conversation }) => {
-  const [isOpen, setIsOpen] = useState<boolean>(false);
   const { otherUser } = useOtherUser(conversation);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const { members } = useActiveList();
+  const isActive = members.includes(otherUser.email!);
 
   const statusText = useMemo(() => {
     if (conversation.isGroup) return `${conversation.users.length} members`;
 
-    return "Active";
-  }, [conversation]);
+    return isActive ? "Online" : "Offline";
+  }, [conversation, isActive]);
 
   return (
     <>
