@@ -49,7 +49,6 @@ const SettingsModal: FC<Props> = ({ currentUser, isOpen, onClose }) => {
       .post("/api/settings", data)
       .then(() => {
         onClose();
-        toast.success("Chaged profile successfully!");
         return router.refresh();
       })
       .catch(() => toast.error("Something went wrong!"))

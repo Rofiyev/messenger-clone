@@ -3,11 +3,11 @@ import { NextResponse } from "next/server";
 import prisma from "@/lib/prismadb";
 
 export async function POST(request: Request) {
-  const currentUser = await getCurrentUser();
-  const body = await request.json();
-  const { userId, isGroup, members, name } = body;
-
   try {
+    const currentUser = await getCurrentUser();
+    const body = await request.json();
+    const { userId, isGroup, members, name } = body;
+
     if (!currentUser?.id || !currentUser?.email)
       return new NextResponse("Unauthorized", { status: 401 });
 

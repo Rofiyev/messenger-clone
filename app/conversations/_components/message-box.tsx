@@ -1,6 +1,6 @@
 "use client";
 
-import { FC } from "react";
+import { FC, useState } from "react";
 import { FullMessageType } from "@/types";
 import { useSession } from "next-auth/react";
 import { User } from "@prisma/client";
@@ -8,6 +8,7 @@ import clsx from "clsx";
 import Avatar from "@/app/_components/avatar";
 import { format } from "date-fns";
 import Image from "next/image";
+import ImageModal from "./image-modal";
 
 interface Props {
   message: FullMessageType;
@@ -16,6 +17,7 @@ interface Props {
 
 const MessageBox: FC<Props> = ({ message, isLast }) => {
   const { data: session } = useSession();
+  const [imageModalOpen, setImageModalOpen] = useState<boolean>(false);
 
   const isOwn = session?.user?.email === message?.sender?.email;
   const seenList = (message.seen || [])
@@ -62,8 +64,14 @@ const MessageBox: FC<Props> = ({ message, isLast }) => {
             message.image ? "rounded-md p-0" : "rounded-full px-3 py-2"
           )}
         >
+          <ImageModal
+            src={message.image}
+            isOpen={imageModalOpen}
+            onClose={() => setImageModalOpen(false)}
+          />
           {message.image ? (
             <Image
+              onClick={() => setImageModalOpen(true)}
               src={message.image}
               alt="image"
               height={288}

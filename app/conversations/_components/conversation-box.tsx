@@ -9,6 +9,7 @@ import { User } from "@prisma/client";
 import clsx from "clsx";
 import Avatar from "@/app/_components/avatar";
 import { format } from "date-fns";
+import AvatarGroup from "@/app/_components/avatar-group";
 
 interface Props {
   conversation: FullConversationType;
@@ -72,7 +73,12 @@ const ConversationBox: FC<Props> = ({ conversation, selected }) => {
         selected ? "bg-neutral-100" : "bg-white"
       )}
     >
-      <Avatar user={otherUser} />
+      {conversation.isGroup ? (
+        <AvatarGroup users={conversation.users} />
+      ) : (
+        <Avatar user={otherUser} />
+      )}
+
       <div className="min-w-0 flex-1">
         <div className="focus:outline-none">
           <div

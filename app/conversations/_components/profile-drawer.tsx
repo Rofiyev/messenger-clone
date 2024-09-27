@@ -14,6 +14,7 @@ import { FaXmark } from "react-icons/fa6";
 import Avatar from "@/app/_components/avatar";
 import { IoTrash } from "react-icons/io5";
 import ConfirmModal from "./confirm-modal";
+import AvatarGroup from "@/app/_components/avatar-group";
 
 interface Props {
   conversation: Conversation & {
@@ -43,7 +44,10 @@ const ProfileDrawer: FC<Props> = ({ conversation, isOpen, onClose }) => {
 
   return (
     <>
-      <ConfirmModal isOpen={confirmOpen} onClose={() => setConfirmOpen(false)} />
+      <ConfirmModal
+        isOpen={confirmOpen}
+        onClose={() => setConfirmOpen(false)}
+      />
       <Drawer open={isOpen} direction="right" onClose={onClose}>
         <DrawerContent
           className="
@@ -96,7 +100,11 @@ const ProfileDrawer: FC<Props> = ({ conversation, isOpen, onClose }) => {
                   "
                 >
                   <div className="mb-2">
-                    <Avatar user={otherUser} />
+                    {conversation.isGroup ? (
+                      <AvatarGroup users={conversation.users} />
+                    ) : (
+                      <Avatar user={otherUser} />
+                    )}
                   </div>
                   <div>{title}</div>
                   <div className="text-sm text-gray-500">{statusText}</div>
@@ -158,6 +166,35 @@ const ProfileDrawer: FC<Props> = ({ conversation, isOpen, onClose }) => {
                       sm:px-6
                       "
                     >
+                      {conversation.isGroup && (
+                        <div>
+                          <dt
+                            className="
+                            text-sm
+                            font-medium
+                            text-gray-500
+                            sm:w-40
+                            sm:flex-shrink-0
+                            "
+                          >
+                            Emails
+                          </dt>
+                          <dd>
+                            <div
+                              className="
+                              mt-1
+                              text-sm
+                              text-gray-900
+                              sm:col-span-2
+                            "
+                            >
+                              {conversation.users
+                                .map((user: User) => user.email)
+                                .join(", ")}
+                            </div>
+                          </dd>
+                        </div>
+                      )}
                       {!conversation.isGroup && (
                         <div>
                           <dt
