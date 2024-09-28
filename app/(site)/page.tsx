@@ -1,7 +1,24 @@
+"use client";
+
 import Image from "next/image";
 import AuthForm from "@/app/_components/auth-form";
+import { useEffect, useState } from "react";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import LoadingModal from "../_components/loading-modal";
 
 export default function Home() {
+  const router = useRouter();
+  const { status } = useSession();
+  const [pageLoading, setLoadingPage] = useState<boolean>(true);
+
+  useEffect(() => {
+    if (status === "authenticated") router.push("/users");
+    else if (status === "unauthenticated") setLoadingPage(false);
+  }, [status, router]);
+
+  if (pageLoading) return <LoadingModal />;
+
   return (
     <div
       className="
