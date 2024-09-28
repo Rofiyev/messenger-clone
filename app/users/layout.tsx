@@ -4,6 +4,8 @@ import Sidebar from "../_components/sidebar/sidebar";
 import getUsers from "@/actions/getUsers";
 import UserList from "./_components/user-list";
 
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = {
   title: "Messenger App - Users",
   description: "Messenger App - Users",
